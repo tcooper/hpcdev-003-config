@@ -1,0 +1,114 @@
+#!/bin/env python
+
+import os
+import getopt
+import pwd
+import smtplib
+import socket
+import string
+import sys
+
+#----------------------------------------------------------------------
+def usage():
+    print ("Usage: %s -s subject -t to_addr [-f from_addr] [-c cc_addr] [-b bcc_addr] [-r reply_to_addr] [-m message]" % sys.argv[0])
+
+#----------------------------------------------------------------------
+def send_email(subject, body_text, host,
+    from_addr, to_emails, reply_to_addr, cc_emails, bcc_emails):
+    """
+    Send an email using smtplib
+    """
+
+    MSG_HDR = string.join((
+            "From: %s" % from_addr,
+            "To: %s" % ', '.join(to_emails),
+            "Subject: %s" % subject
+        ), "\r\n")
+
+    emails = to_emails
+
+    if cc_emails:
+        MSG_HDR = string.join((MSG_HDR,
+            "CC: %s" % ', '.join(cc_emails)
+            ), "\r\n")
+        emails = emails + cc_emails
+
+    if bcc_emails:
+        MSG_HDR = string.join((MSG_HDR,
+            "BCC: %s" % ', '.join(bcc_emails)
+            ), "\r\n")
+        emails = emails + bcc_emails
+
+    if reply_to_addr:
+        MSG_HDR = string.join((MSG_HDR,
+            "Reply-To: %s" % reply_to_addr
+            ), "\r\n")
+
+    MSG_BODY = string.join((
+            "",
+            body_text
+            ), "\r\n")
+
+    MSG = string.join((
+            MSG_HDR,
+            MSG_BODY
+            ), "\r\n")
+
+    server = smtplib.SMTP(host)
+    server.sendmail(from_addr, emails, MSG)
+    server.quit()
+
+if __name__ == "__main__":
+
+    # Defaults...
+    fqdn = socket.getfqdn();
+    hn = fqdn.split('.')[0]
+    dn = '.'.join(fqdn.split('.')[1:])
+    host = 'hpcdev-003.local'
+    pw_name = pwd.getpwuid(os.getuid()).pw_name
+    from_addr = '@'.join([pw_name, dn])
+    to_emails = []
+    cc_emails = []
+    bcc_emails = []
+    reply_to_addr = []
+    subject = ""
+    body_text = ""
+
+    # Parse input args as provided...
+    try:
+        opts, args = getopt.getopt(sys.argv[1:],"hf:t:c:b:r:s:m:",
+            ["help", "from=", "to=", "cc=", "bcc=", "reply_to=",
+             "subject=", "message="])
+    except getopt.GetoptError as e:
+        print (str(e))
+        usage()
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif opt in ("-f", "--from"):
+            from_addr = arg
+        elif opt in ("-t", "--to"):
+            to_emails = [arg]
+        elif opt in ("-c", "--cc"):
+            cc_emails = [arg]
+        elif opt in ("-b", "--bcc"):
+            bcc_emails = [arg]
+        elif opt in ("-r", "--reply_to"):
+            reply_to_addr = arg
+        elif opt in ("-s", "--subject"):
+            subject = arg
+        elif opt in ("-m", "--message"):
+            body_text = arg
+
+    if not to_emails:
+        print "You MUST supply a To: address"
+        sys.exit(2)
+
+    if not subject:
+        print "You MUST supply a Subject: message"
+        sys.exit(2)
+
+    send_email(subject, body_text, host, from_addr, to_emails, reply_to_addr, cc_emails, bcc_emails)

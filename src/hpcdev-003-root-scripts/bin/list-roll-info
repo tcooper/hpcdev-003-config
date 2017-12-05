@@ -1,0 +1,19 @@
+#!/bin/sh
+
+ROLL_VERS="$(/opt/rocks/bin/rocks list roll | awk '/ yes/{print $1,$2}' | sed 's/://g')"
+TF=$(mktemp)
+printf "roll;version;release;date\n" > $TF
+while IFS= read
+do
+	roll=$(echo $REPLY | awk '{print $1}')
+	vers=$(echo $REPLY | awk '{print $2}')
+	printf "%s;" $roll >> $TF
+	roll_info=$(grep release /export/rocks/install/rolls/$roll/$vers/x86_64/roll-$roll.xml | sed 's,\t<info ,,g;s,/>,,g;s,",,g;s,version=,,g;s,release=,,g;s,arch=,,g;s,os=,,g' | awk '{print $1" "$2}')
+	roll_date=$(awk -F= '/timestamp/ {print $3,$2,$4}' /export/rocks/install/rolls/$roll/$vers/x86_64/roll-$roll.xml | awk -F\" '{print $2,$4,$6}')
+	printf "%s;%s;%s\n" $roll_info "$roll_date" >> $TF
+done <<< "$ROLL_VERS"
+
+cat $TF | column -s=';' -t
+rm $TF
+
+exit 0

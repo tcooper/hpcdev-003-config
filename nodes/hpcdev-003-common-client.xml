@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+<description>
+	hpcdev-003 specific configuration common to all nodes, except the front end.
+</description>
+
+<copyright>
+	Copyright (c) 2000 - 2017 The Regents of the University of California.
+	All rights reserved. Rocks(r) v6.2/v7.0 www.rocksclusters.org
+</copyright>
+
+<package>sqlite-devel</package>
+<package>ruby-devel<package>
+
+<post>
+
+<!-- X11 is installed, but run in multiuser with the server off -->
+/usr/bin/systemctl set-default multi-user.target
+
+</post>
+
+</kickstart> 
+

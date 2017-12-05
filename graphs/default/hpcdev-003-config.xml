@@ -3,25 +3,25 @@
 	<graph>
 
 	<description>
-	Sidewinder-specific configuration
+	hpcdev-003-specific configuration
 	</description>
 
 	<!-- Graph Ordering for Kickstart Generation -->
 
 	<!-- Common -->
 	<edge from="base">
-		<to>sidewinder-common</to>
+		<to>hpcdev-003-common</to>
 	</edge>
 	<order head="base">
-		<tail>sidewinder-common</tail>
+		<tail>hpcdev-003-common</tail>
 	</order>
 
 	<!-- All Clients -->
 	<edge from="client">
-		<to>sidewinder-common-client</to>
+		<to>hpcdev-003-common-client</to>
 	</edge>
 	<order head="client">
-		<tail>sidewinder-common-client</tail>
+		<tail>hpcdev-003-common-client</tail>
 	</order>
 
 	<edge from="client">
@@ -30,26 +30,26 @@
 
 	<!-- Front end -->
 	<edge from="server">
-		<to>sidewinder-server</to>
+		<to>hpcdev-003-server</to>
 	</edge>
-	<order head="sidewinder-server">
+	<order head="hpcdev-003-server">
 		<tail>server</tail>
 	</order>
 
 	<!-- Login nodes -->
 	<edge from="login">
-		<to>sidewinder-login</to>
+		<to>hpcdev-003-login</to>
 	</edge>
-	<order head="sidewinder-login">
+	<order head="hpcdev-003-login">
 		<tail>login</tail>
 	</order>
 	
 	<!-- Compute nodes -->
 	<edge from="compute">
-		<to>sidewinder-compute</to>
+		<to>hpcdev-003-compute</to>
 	</edge>
 	<order head="compute">
-		<tail>sidewinder-compute</tail>
+		<tail>hpcdev-003-compute</tail>
 	</order>
 
 

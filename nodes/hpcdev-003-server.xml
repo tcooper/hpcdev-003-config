@@ -3,21 +3,19 @@
 <kickstart>
 
 <description>
-Sidewinder-specific server configuration.
+	hpcdev-003 specific server configuration.
 </description>
 
 <copyright>
-Copyright (c) 2000 - 2016 The Regents of the University of California.
-All rights reserved. Rocks(r) v6.2 www.rocksclusters.org
+	Copyright (c) 2000 - 2017 The Regents of the University of California.
+	All rights reserved. Rocks(r) v6.2/v7.0 www.rocksclusters.org
 </copyright>
-
-<changelog></changelog>
 
 <package>screen</package>
 
 <post>
 
-<!-- Install X11 for libraries. Run level set in sidewinder-common-client.xml -->
+<!-- Install X11 for libraries. Run level set in hpcdev-003-common-client.xml -->
 /opt/rocks/bin/rocks set appliance attr compute x11 True
 /opt/rocks/bin/rocks set appliance attr login x11 True
 
@@ -25,7 +23,7 @@ All rights reserved. Rocks(r) v6.2 www.rocksclusters.org
 /opt/rocks/bin/rocks set appliance attr login primary_net public
 
 <!-- X11 is installed, but run in multiuser with the server off -->
-sed -i s/id:5:initdefault:/id:3:initdefault:/ /etc/inittab
+/usr/bin/systemctl set-default multi-user.target
 
 <file name="/root/.ssh/authorized_keys" mode="append">
 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA0i1iMeI0iC1naMnxHFpQbCx09j0anka42ynLv2v8rYKAW4Z9rTreLAirDK4WSxIhfd28ui9R2PfQPhvtaerMJ33r6VpPve+gaLbD5MPZyYRPbu3shdj7uD9qezDA/rnN/SXVRXAJtjk8WwA0ENb2iqqGDZZTX1uu83ElDu4ZXAtW0nAVOqcLwfyyFect5PnD+oNjphKCZSkRm7rb5te2bnev8IYOb91XJKfaOlDpznFkDEWpo4hVkf/5U2sfKEnY4GKEnjcAKV+dFzFhRz6uyW7i2PpGlgV7iQbWXJk0k9kw4KhzuOlmku4sRFw5RAchAelfE3SGHSK9+dbd5hVmUw== tcooper@sdsc.edu

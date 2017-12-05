@@ -1,6 +1,6 @@
-ROLLNAME	= sidewinder-config
-VERSION		= 6.2
-RELEASE		= `git rev-parse --short HEAD`
+ROLLNAME	= hpcdev-003-config
+VERSION		= 7.0
+RELEASE		= g`git rev-parse --short HEAD`
 COLOR		= aquamarine
 
 REDHAT.ROOT	= $(CURDIR)

@@ -4,6 +4,7 @@ RPMS/
 SRPMS/
 Rolls.mk
 Rules-install.mk
+Rules-repo-centos.mk
 Rules-linux-centos.mk
 Rules-linux.mk
 Rules-rcfiles.mk
