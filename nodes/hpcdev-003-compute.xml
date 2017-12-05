@@ -20,6 +20,7 @@
      Add it here to remove the warning from autofs when starting/restarting...
  -->
 <package>libsss_autofs</package>
+<package>hpcdev-003-compute-scripts</package>
 
 <post>
 <!-- Services to turn off -->
