@@ -36,6 +36,43 @@
 ]]>
 </file>
 
+
+<!-- Implement SDSC Security SSH Login Banner -->
+<file name="/etc/sshd_banner" mode="create" perms="0644">
+<![CDATA[
+
++------------------------------------------------------------------------------+
+|                                   WARNING                                    |
++------------------------------------------------------------------------------+
+| This computer system, which is maintained & administered by UCSD Staff, is   |
+| for authorized use only. Users have no expectation of privacy in any         |
+| materials they place or view on this system.                                 |
+|                                                                              |
+| This system is for authorized use only. It is not designed or intended to    |
+| host or process sensitive data including but not limited to Personal or      |
+| Protected Health Information (PHI) as defined by the Health Insurance        |
+| Portability and Accountability Act (HIPAA), Personally Identifiable          |
+| Information (PII), Federally protected information as defined by the Federal |
+| Information Security Management Act (FISMA), or information regulated by the |
+| International Traffic in Arms Regulations (ITAR). If you require a system to |
+| process such information, please contact the San Diego Supercomputer Center  |
+| (SDSC) Security Department.                                                  |
+|                                                                              |
+| SDSC complies with state and federal law regarding certain legally protected |
+| confidential information, but makes no representation that any other uses of |
+| this system will be private or confidential. By continuing to use this       |
+| system you indicate your awareness of and consent to these terms and         |
+| conditions of use.                                                           |
+|                                                                              |
+| LOG OFF IMMEDIATELY if you do not agree to the conditions stated in this     |
+| warning.                                                                     |
++------------------------------------------------------------------------------+
+
+]]>
+</file>
+
+/usr/bin/sed 's,^#Banner none$,Banner /etc/sshd_banner,' /etc/ssh/sshd_config
+
 </post>
 
 </kickstart>
