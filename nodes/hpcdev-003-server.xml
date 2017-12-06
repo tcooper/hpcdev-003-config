@@ -16,6 +16,11 @@
 
 <post>
 
+<!-- Add SDSC Security SSH login banner to specific appliances -->
+/opt/rocks/bin/rocks set appliance attr frontend sshd_banner True
+/opt/rocks/bin/rocks set appliance attr login sshd_banner True
+/opt/rocks/bin/rocks set appliance attr compute sshd_banner False
+
 <!-- Install X11 for libraries. Run level set in hpcdev-003-common-client.xml -->
 /opt/rocks/bin/rocks set appliance attr compute x11 True
 /opt/rocks/bin/rocks set appliance attr login x11 True

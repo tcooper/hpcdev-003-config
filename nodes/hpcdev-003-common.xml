@@ -36,6 +36,9 @@
 ]]>
 </file>
 
+</post>
+
+<post cond="sshd_banner">
 
 <!-- Implement SDSC Security SSH Login Banner -->
 <file name="/etc/sshd_banner" mode="create" perms="0644">
