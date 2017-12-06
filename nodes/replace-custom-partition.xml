@@ -1,0 +1,44 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+<!-- Custom Partitioning Node -->
+<pre arg="--interpreter /opt/rocks/bin/python">
+
+from rocks import rocks_partition
+
+membership = '&membership;'
+nodename = '&hostname;'
+
+def doCompute(file, disk):
+	file.write('zerombr\n')
+        file.write('clearpart --all --drives=%s --initlabel\n' % disk)
+        file.write('part / --fstype=ext4 --size=65536 --ondisk=%s\n' % disk)
+        file.write('part /scratch --fstype=ext4 --size=1 --grow --ondisk=%s\n' % disk)
+
+def doDevel(file, disk):
+	file.write('zerombr\n')
+        file.write('clearpart --all --drives=%s --initlabel\n' % disk)
+        file.write('part / --fstype=ext4 --size=32768 --ondisk=%s\n' % disk)
+        file.write('part /scratch --fstype=ext4 --size=1 --grow --ondisk=%s\n' % disk)
+
+#
+# main
+#
+p = rocks_partition.RocksPartition()
+disks = p.getDisks()
+
+file = open('/tmp/user_partition_info', 'w')
+
+if membership in [ 'Compute' ]:
+	doCompute(file, disks[0])
+
+if membership in [ 'Development Server' ]:
+	doDevel(file, disks[0])
+
+file.close()
+
+</pre>
+
+</kickstart>
+
