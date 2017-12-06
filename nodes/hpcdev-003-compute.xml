@@ -36,10 +36,6 @@
 ]]>
 </file>
 
-<file name="/etc/environment" mode="append">
-BASH_ENV=~/.bashrc
-</file>
-
 <!-- remove file to ensure custom partitioning -->
 rm -f /.rocks-release
 
