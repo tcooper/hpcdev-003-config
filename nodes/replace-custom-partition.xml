@@ -33,7 +33,7 @@ file = open('/tmp/user_partition_info', 'w')
 if membership in [ 'Compute' ]:
 	doCompute(file, disks[0])
 
-if membership in [ 'Development Server' ]:
+if membership in [ 'Development Appliance' ]:
 	doDevel(file, disks[0])
 
 file.close()
