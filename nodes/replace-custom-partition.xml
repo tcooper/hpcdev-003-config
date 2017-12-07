@@ -13,14 +13,14 @@ nodename = '&hostname;'
 def doCompute(file, disk):
 	file.write('zerombr\n')
         file.write('clearpart --all --drives=%s --initlabel\n' % disk)
-        file.write('part / --fstype=ext4 --size=65536 --ondisk=%s\n' % disk)
-        file.write('part /scratch --fstype=ext4 --size=1 --grow --ondisk=%s\n' % disk)
+        file.write('part / --fstype=ext4 --size=62500 --ondisk=%s\n' % disk)
+        file.write('part raid.00 --size=1 --grow --ondisk=%s\n' % disk)
 
 def doDevel(file, disk):
 	file.write('zerombr\n')
         file.write('clearpart --all --drives=%s --initlabel\n' % disk)
-        file.write('part / --fstype=ext4 --size=32768 --ondisk=%s\n' % disk)
-        file.write('part /scratch --fstype=ext4 --size=1 --grow --ondisk=%s\n' % disk)
+        file.write('part / --fstype=ext4 --size=31250 --ondisk=%s\n' % disk)
+        file.write('part /state/partition1 --fstype=ext4 --size=1 --grow --ondisk=%s\n' % disk)
 
 #
 # main

@@ -41,5 +41,25 @@ rm -f /.rocks-release
 
 </post>
 
+<post>
+
+<!-- Creating a zpool for /scratch -->
+<file perms="0700" name="/etc/rc.d/rocksconfig.d/post-30-create-zpool"  mode="create">
+#!/bin/sh
+
+/sbin/zpool create scratch /dev/sda2
+rval=$?
+if [[ $rval -ne 0 ]];
+then
+    msg='zpool scratch could not be created'
+    /bin/logger -i -p syslog.err -t rocksconfig.d "$msg"
+fi
+
+rm -f /etc/rc.d/rocksconfig.d/post-30-create-zpool
+exit $rval
+</file>
+
+</post>
+
 </kickstart> 
 
