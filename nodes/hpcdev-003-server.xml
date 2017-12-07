@@ -25,6 +25,9 @@
 /opt/rocks/bin/rocks set appliance attr compute x11 True
 /opt/rocks/bin/rocks set appliance attr login x11 True
 
+<!-- Enable ZFS on specific appliances -->
+/opt/rocks/bin/rocks set appliance attr compute zfs True
+
 <!-- Set login appliances to use their public interface as their primary interface -->
 /opt/rocks/bin/rocks set appliance attr login primary_net public
 
