@@ -11,6 +11,7 @@
 	All rights reserved. Rocks(r) v6.2/v7.0 www.rocksclusters.org
 </copyright>
 
+<package>freeipmi</package>
 <package>screen</package>
 <package>hpcdev-003-root-scripts</package>
 
