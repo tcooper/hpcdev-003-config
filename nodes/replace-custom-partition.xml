@@ -9,6 +9,7 @@ from rocks import rocks_partition
 
 membership = '&membership;'
 nodename = '&hostname;'
+sysfs_path = '&sysfs_path;'
 
 def doCompute(file, disk):
 	file.write('zerombr\n')
@@ -26,7 +27,38 @@ def doDevel(file, disk):
 # main
 #
 p = rocks_partition.RocksPartition()
-disks = p.getDisks()
+
+if not sysfs_path:
+	disks = p.getDisks()
+else:
+	disks = map(lambda x: x.name, filter(lambda x: sysfs_path in x.sysfsPath, p.disks))
+
+# Filter disks based on PCI device ID / sysfs path
+# Get as specific as you need to...
+#
+# # lspci -nn | grep -i sata
+# 00:1f.2 SATA controller [0106]: Intel Corporation 82801JI (ICH10 Family) SATA AHCI Controller [8086:3a22]
+#
+# >>> p.disks
+# [DiskDevice instance (0x1f89990) --
+#   name = sda  status = True  kids = 6 id = 2
+#   parents = []
+#   uuid = None  size = 232.89 GiB
+#   format = existing msdos disklabel
+#   major = 8  minor = 0  exists = True  protected = False
+#   sysfs path = /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sda
+#   target size = 232.89 GiB  path = /dev/sda
+#   format args = []  originalFormat = disklabel  removable = True, DiskDevice instance (0x1ff9b50) --
+#   name = sdb  status = True  kids = 6 id = 61
+#   parents = []
+#   uuid = None  size = 232.89 GiB
+#   format = existing msdos disklabel
+#   major = 8  minor = 16  exists = True  protected = False
+#   sysfs path = /sys/devices/pci0000:00/0000:00:1f.2/ata2/host1/target1:0:0/1:0:0:0/block/sdb
+#   target size = 232.89 GiB  path = /dev/sdb
+#   format args = []  originalFormat = disklabel  removable = True]
+# >>> map(lambda x: x.name, filter(lambda x: '0000:00:1f.2' in x.sysfsPath, p.disks))
+# [u'sda', u'sdb']
 
 file = open('/tmp/user_partition_info', 'w')
 
